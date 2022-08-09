@@ -3,11 +3,7 @@ import { useContext, useEffect } from 'react'
 import { CyclesContext } from '../../../../contexts/CyclesContext'
 import { CountdownContainer, Separator } from './styles'
 
-interface CountdownProps {
-  deactiveCurrentCycle: () => void
-}
-
-export function Countdown({ deactiveCurrentCycle }: CountdownProps) {
+export function Countdown() {
   const {
     activeCycle,
     activeCycleId,
@@ -36,33 +32,26 @@ export function Countdown({ deactiveCurrentCycle }: CountdownProps) {
 
     if (activeCycle) {
       interval = setInterval(() => {
-        const secondsDifferent = differenceInSeconds(
+        const secondsDifference = differenceInSeconds(
           new Date(),
           activeCycle.startDate,
         )
 
-        if (secondsDifferent >= totalSeconds) {
+        if (secondsDifference >= totalSeconds) {
           markCurrentCycleAsFinished()
 
-          deactiveCurrentCycle()
           document.title = `00:00`
           clearInterval(interval)
         }
 
-        setSecondsPassed(secondsDifferent)
+        setSecondsPassed(secondsDifference)
       }, 1000)
     }
 
     return () => {
       clearInterval(interval)
     }
-  }, [
-    activeCycle,
-    totalSeconds,
-    markCurrentCycleAsFinished,
-    deactiveCurrentCycle,
-    setSecondsPassed,
-  ])
+  }, [activeCycle, totalSeconds, markCurrentCycleAsFinished, setSecondsPassed])
 
   return (
     <CountdownContainer>
