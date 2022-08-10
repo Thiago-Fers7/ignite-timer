@@ -1,4 +1,5 @@
-/* eslint-disable no-unused-vars */
+import { CyclesActionTypes } from './actions'
+
 export interface Cycle {
   id: string
   task: string
@@ -11,12 +12,6 @@ export interface Cycle {
 interface CyclesState {
   cycles: Cycle[]
   activeCycleId: string | null
-}
-
-export enum CyclesActionTypes {
-  CREATE_NEW_CYCLE = 'CREATE_NEW_CYCLE',
-  INTERRUPT_CURRENT_CYCLE = 'INTERRUPT_CURRENT_CYCLE',
-  MARK_CURRENT_CYCLE_AS_FINISHED = 'MARK_CURRENT_CYCLE_AS_FINISHED',
 }
 
 export function cyclesReducer(state: CyclesState, action: any) {
