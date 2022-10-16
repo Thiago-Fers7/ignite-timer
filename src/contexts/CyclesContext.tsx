@@ -37,12 +37,14 @@ interface CyclesContextProps {
 export const CyclesContext = createContext({} as CyclesContextType)
 
 export function CyclesContextProvider({ children }: CyclesContextProps) {
+  const initialCycles = {
+    cycles: [],
+    activeCycleId: null,
+  }
+
   const [cyclesState, dispatch] = useReducer(
     cyclesReducer,
-    {
-      cycles: [],
-      activeCycleId: null,
-    },
+    initialCycles,
     () => {
       const storedStateAsJSON = localStorage.getItem(
         '@ignite-timer:cycles-state-1.0.0',
@@ -51,6 +53,7 @@ export function CyclesContextProvider({ children }: CyclesContextProps) {
       if (storedStateAsJSON) {
         return JSON.parse(storedStateAsJSON)
       }
+      return initialCycles
     },
   )
 
